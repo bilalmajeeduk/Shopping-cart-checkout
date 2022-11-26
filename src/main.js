@@ -7,7 +7,8 @@ let input;
 let quantity;
 let FruitTeaPrice = 3.11;
 const CF1_Price = 11.23;
-function iamloop() {
+
+function placeAnOrder() {
 
     let start = prompt("Are you ready to scan items: ");
     let quantityofFruitTea;
@@ -56,7 +57,7 @@ function iamloop() {
             console.log(FR1, "£", FruitTeaPrice, "x", quantityofFruitTea)
             console.log(CF1, "£", totalPriceOfCF1, "x", quantityofCF1)
             console.log(SR1, "£", totalPriceOfSR1, "x", quantity)
-            let total = FruitTeaPrice * totalPriceOfCF1
+            let total = FruitTeaPrice + totalPriceOfCF1
             console.log("total: ", total)
         }
     }
@@ -71,4 +72,4 @@ function buyOnegetOne(item, price) {
     // return item, price;
 }
 // weant more // checkout
-iamloop();
+placeAnOrder();
