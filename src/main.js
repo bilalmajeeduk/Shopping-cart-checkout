@@ -13,6 +13,7 @@ function iamloop() {
     let quantityofFruitTea;
     let quantityofCF1
     let totalPriceOfCF1;
+    let totalPriceOfSR1 = 5.00
 
     if (start == "Yes" || "yes") {
         input = prompt("Please scan your product: ");
@@ -27,6 +28,15 @@ function iamloop() {
             }
 
         }
+
+        if (input == "SR1") {
+            console.log("calling from SR1")
+            if (quantity == 3 || quantity > 3) {
+                totalPriceOfSR1 = 4.50
+                // buyOnegetOne(quantityofFruitTea, FruitTeaPrice)
+            }
+        }
+
 
         let scan_more = prompt("want to scan more?: ");
         while (scan_more == "yes") {
@@ -43,11 +53,11 @@ function iamloop() {
         }
         if (scan_more == "no") {
             // const totalPriceofSingleItem = FruitTeaPrice * quantity
-            console.log(FR1, FruitTeaPrice, "X", quantityofFruitTea)
-            console.log(CF1, totalPriceOfCF1, "X", quantityofCF1)
+            console.log(FR1, "£", FruitTeaPrice, "x", quantityofFruitTea)
+            console.log(CF1, "£", totalPriceOfCF1, "x", quantityofCF1)
+            console.log(SR1, "£", totalPriceOfSR1, "x", quantity)
             let total = FruitTeaPrice * totalPriceOfCF1
             console.log("total: ", total)
-            console.log("this is checkout here is full price to pay")
         }
     }
 }
