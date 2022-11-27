@@ -1,75 +1,86 @@
 const prompt = require("prompt-sync")({ sigint: true });
 
-const FR1 = "FruitTea";
-const SR1 = "Strawberries";
-const CF1 = "Coffee"
-let input;
+function productDetails() {
+    const availableProducts = [
+        {
+            productCode: FR1, Name: "Fruit Tea", Price: 3.11
+        },
+        {
+            productCode: SR1, Name: "Strawberries", Price: 5.00
+        },
+        {
+            productCode: CF1, Name: "Coffee", Price: 11.23
+        }
+    ]
+}
+let product = {}
+const checkOutProducts = [];
 let quantity;
-let FruitTeaPrice = 3.11;
-const CF1_Price = 11.23;
 
 function placeAnOrder() {
-
+    let productCode;
     let start = prompt("Are you ready to scan items: ");
-    let quantityofFruitTea;
-    let quantityofCF1
-    let totalPriceOfCF1;
-    let totalPriceOfSR1 = 5.00
 
     if (start == "Yes" || "yes") {
-        input = prompt("Please scan your product: ");
-        quantity = prompt("Please enter the quantity: ");
-        if (input == "FR1") {
-
-            if (quantity == 1) {
-                quantityofFruitTea = quantity;
-                quantityofFruitTea = 2;
-                quantity = ''
-                // buyOnegetOne(quantityofFruitTea, FruitTeaPrice)
-            }
-
-        }
-
-        if (input == "SR1") {
-            console.log("calling from SR1")
-            if (quantity == 3 || quantity > 3) {
-                totalPriceOfSR1 = 4.50
-                // buyOnegetOne(quantityofFruitTea, FruitTeaPrice)
-            }
-        }
-
-
-        let scan_more = prompt("want to scan more?: ");
+        let scan_more = "yes";
         while (scan_more == "yes") {
-            console.log("i am from while-loop")
-            input = prompt("Please scan your next product: ");
+            productCode = prompt("Please scan your products: ");
             quantity = prompt("Please enter the quantity: ");
-            if (input == "CF1") {
-                quantityofCF1 = quantity;
-                totalPriceOfCF1 = quantityofCF1 * CF1_Price
-                console.log(totalPriceOfCF1)
-            }
-            scan_more = prompt("want to scan more?: ");
+            product = new Object();
+            product.productCode = productCode;
+            product.quantity = quantity;
+            checkOutProducts.push(product);
 
+            scan_more = prompt("want to scan more?: ");
         }
         if (scan_more == "no") {
-            // const totalPriceofSingleItem = FruitTeaPrice * quantity
-            console.log(FR1, "£", FruitTeaPrice, "x", quantityofFruitTea)
-            console.log(CF1, "£", totalPriceOfCF1, "x", quantityofCF1)
-            console.log(SR1, "£", totalPriceOfSR1, "x", quantity)
-            let total = FruitTeaPrice + totalPriceOfCF1
-            console.log("total: ", total)
+            console.log(calculateFinalPrice(checkOutProducts));
         }
     }
 }
-function buyOnegetOne(item, price) {
-    if (item == 1) {
-        item = 2;
-        price = 3.11
-        // return item
-    }
-    // console.log('asd', item, price)
-    // return item, price;
+
+function calculateFinalPrice(checkOutProducts) {
+
+    let totalPrice = 0;
+
+    checkOutProducts.forEach(element => {
+        if (element.productCode == "FR1") {
+            let price = calculateOfferBuyOneGetOne(element.quantity);
+            totalPrice = price + totalPrice;
+        }
+        else if (element.productCode == "SR1") {
+            let price = calculateOfferBulkPurchase(element.quantity);
+            totalPrice = price + totalPrice;
+        }
+        else if (element.productCode == "CF1") {
+            let price = element.quantity * 11.23;
+            totalPrice = price + totalPrice;
+        }
+    });
+
+    return totalPrice;
+
 }
-// weant more // checkout
+function calculateOfferBuyOneGetOne(quantity) {
+
+    let remainder = 0;
+    let quotient = 0;
+    if (quantity % 2 != 0) {
+        remainder = quantity % 2
+    }
+    quotient = Math.floor(quantity / 2)
+
+    let discountedPrice = quotient * 3.11;
+    let regularPrice = remainder * 3.11;
+    return discountedPrice + regularPrice;
+}
+function calculateOfferBulkPurchase(quantity) {
+    let discountedPrice = 0;
+    if (quantity == 3 || quantity > 3) {
+        discountedPrice = 5.00 * 10 / 100;
+    }
+    let totalPrice = quantity * (5 - discountedPrice);
+    return totalPrice;
+}
+
 placeAnOrder();
