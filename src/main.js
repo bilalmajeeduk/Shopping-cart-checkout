@@ -43,6 +43,7 @@ function calculateFinalPrice(checkOutProducts) {
 
     let totalPrice = 0;
 
+
     checkOutProducts.forEach(element => {
         if (element.productCode == "FR1") {
             let price = calculateOfferBuyOneGetOne(element.quantity);
@@ -84,3 +85,6 @@ function calculateOfferBulkPurchase(quantity) {
 }
 
 placeAnOrder();
+
+exports.calculateOfferBuyOneGetOne = calculateOfferBuyOneGetOne;
+exports.calculateOfferBulkPurchase = calculateOfferBulkPurchase;
